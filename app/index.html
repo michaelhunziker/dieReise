@@ -1,0 +1,109 @@
+<!doctype html>
+<html ng-app="dieReiseApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Reise nach Marokko</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+      <div id="covers" class="container" ng-controller="dataFeedController">
+        <div class="col-xs-12" ng-if="!showContent">
+          <h3>{{message}}</h3>
+        </div>
+        <div class="col-xs-12" ng-if="showContent">
+
+        <a ng-repeat="event in events" ng-class="{true:'available', false:'unavailable'}[event.available]" ng-click="fillModal(event._id, event.available)" data-name='{{event.name}}' data-toggle='modal' data-target='#myModal'><img ng-src={{event.image}}></a>
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{event.name}}</h4>
+              </div>
+              <div class="modal-body">
+                {{event.description}}<br /><br />
+
+                <form ng-controller="GiftController" ng-if="event.available === true" class="form-horizontal" name="myGiftForm" ng-submit="sendForm()" novalidate>
+                  <div class="form-group" ng-class="{ 'has-error' : myGiftForm.firstname.$error.required && !myGiftForm.firstname.$pristine }">
+                    <label for="firstname" class="col-sm-2 control-label">Vorname</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Vorname?"
+                             ng-model="myGift.firstName" required>
+                      <span ng-show="myGiftForm.firstname.$error.required && !myGiftForm.firstname.$pristine" class="help-block">Bitte gib deinen Vornamen an.</span>
+                    </div>
+                  </div>
+                  <div class="form-group" ng-class="{ 'has-error' : myGiftForm.lastname.$error.required && !myGiftForm.lastname.$pristine }">
+                    <label for="lastname" class="col-sm-2 control-label">Nachname</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="lastname" name="lastname"  placeholder="Nachname?"
+                             ng-model="myGift.lastName" required>
+                      <span ng-show="myGiftForm.lastname.$error.required && !myGiftForm.lastname.$pristine" class="help-block">Bitte gib deinen Nachnamen an.</span>
+
+                    </div>
+                  </div>
+                  <div class="form-group" ng-class="{ 'has-error' : myGiftForm.emailid.$error.required && !myGiftForm.emailid.$pristine }">
+                    <label for="emailid" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="emailid" name="emailid" placeholder="Email?"
+                             ng-model="myGift.email" required>
+                      <span ng-show="myGiftForm.emailid.$error.required && !myGiftForm.emailid.$pristine" class="help-block">Bitte gib deine Email-Adresse an.</span>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary" ng-disabled="myGiftForm.$invalid">Schenken</button>
+
+                </form>
+
+                <div ng-if="event.available === false">Vielen Dank.</div>
+
+
+
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services.js"></script>
+    <script src="scripts/controllers.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
