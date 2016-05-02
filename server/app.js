@@ -2,13 +2,14 @@ var mongoose = require('mongoose');
 
 var express = require('express');
 var cors = require('cors');
+// FIXME: Remove unused packages
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var eventRouter = require('./routes/eventRouter');
 
-//connect to database
+// FIXME: Extract db stuff to module
 var url = 'mongodb://localhost:27017/dieReise';
 mongoose.connect(url);
 var db = mongoose.connection;
@@ -20,6 +21,9 @@ db.once('open', function () {
 
 var app = express();
 app.use(cors());
+
+
+// FIXME: Uninstall npm modules. Also remove folder "views", "public", "bin"
 //
 // // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +47,8 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
+
+// FIXME: Extract error handlers to module
 
 // development error handler
 // will print stacktrace

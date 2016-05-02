@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dieReiseApp')
-  .constant('baseURL','http://localhost:3000/')
+  .constant('baseURL','http://46.101.199.218:3000/')
 
   .service('dataService', ['$resource', 'baseURL', function($resource,baseURL) {
 
